@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>RAG Chat</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- tailwindcdn -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-gray-100">
+  <div class="max-w-4xl mx-auto px-4 py-6">
+    <h1 class="text-2xl font-semibold mb-4">🔎 RAG Chat — локально (FastAPI + Chroma + Ollama)</h1>
+
+    <!-- Панель настроек -->
+    <div class="grid grid-cols-2 gap-4 mb-4">
+      <div class="bg-gray-800 rounded-xl p-4">
+        <label class="block text-sm mb-1">Top-k</label>
+        <input id="k" type="number" min="1" max="10" value="5" class="w-full bg-gray-700 rounded px-3 py-2" />
+      </div>
+      <div class="bg-gray-800 rounded-xl p-4">
+        <label class="block text-sm mb-1">Fetch-k (MMR pool)</label>
+        <input id="fetch_k" type="number" min="5" max="50" value="20" class="w-full bg-gray-700 rounded px-3 py-2" />
+      </div>
+      <div class="bg-gray-800 rounded-xl p-4">
+        <label class="inline-flex items-center space-x-2">
+          <input id="use_reranker" type="checkbox" class="mr-2">
+          <span>Включить реранкер</span>
+        </label>
+        <input id="reranker_model" type="text" value="BAAI/bge-reranker-base" class="mt-2 w-full bg-gray-700 rounded px-3 py-2" />
+      </div>
+      <div class="bg-gray-800 rounded-xl p-4">
+        <label class="block text-sm mb-1">LLM (Ollama)</label>
+        <input id="llm_model" type="text" value="mistral" class="w-full bg-gray-700 rounded px-3 py-2" />
+        <label class="block text-sm mt-2">Температура</label>
+        <input id="temperature" type="number" step="0.1" min="0" max="1" value="0.2" class="w-full bg-gray-700 rounded px-3 py-2" />
+      </div>
+    </div>
+
+    <!-- Чат -->
+    <div id="chat" class="bg-gray-800 rounded-2xl p-4 h-[60vh] overflow-y-auto space-y-3 mb-4"></div>
+
+    <!-- Ввод -->
+    <div class="flex gap-2">
+      <input id="message" type="text" placeholder="Задай вопрос по загруженным PDF…" class="flex-1 bg-gray-800 rounded-xl px-4 py-3 outline-none" />
+      <button id="send" class="bg-sky-500 hover:bg-sky-600 text-white rounded-xl px-4 py-3">Отправить</button>
+    </div>
+
+    <!-- Загрузка PDF -->
+    <div class="mt-6 bg-gray-800 rounded-2xl p-4">
+      <h2 class="text-lg font-medium mb-2">Загрузить PDF</h2>
+      <input id="files" type="file" accept="application/pdf" multiple class="block mb-2" />
+      <button id="upload" class="bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl px-4 py-2">Загрузить и проиндексировать</button>
+      <span id="upload-status" class="ml-3 text-sm text-gray-300"></span>
+    </div>
+  </div>
+
+  <script src="/static/app.js?v=5"></script>
+</body>
+</html>
